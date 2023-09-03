@@ -7,11 +7,13 @@ import java.util.function.UnaryOperator;
 public class Calculator {
     static Supplier<Calculator> instance = Calculator::new;
     BinaryOperator<Integer> plus = (x, y) -> x + y;
-    BinaryOperator<Integer> minus = (x ,y) -> x - y;
+    BinaryOperator<Integer> minus = (x, y) -> x - y;
     BinaryOperator<Integer> multiply = (x, y) -> x * y;
-    BinaryOperator<Integer> divide = (x, y) -> x / y;
+    Predicate<Integer> isPosityve = y -> y > 0;
     UnaryOperator<Integer> pow = x -> x * x;
-    UnaryOperator<Integer> ads = x -> x > 0 ? x : x * -1;
-    Predicate<Integer> isPosityve = x -> x > 0;
-    Consumer<Integer> printLn = System.out :: println;
+    UnaryOperator<Integer> ads = y -> y > 0 ? y : 0;
+    
+//    BinaryOperator<Integer> divide = (x, y) -> (y > 0) ? x / y : 0; // Первое решение - использование только тернарного оператора (Работает)
+    BinaryOperator<Integer> divide = (x, y) -> (isPosityve.test(y)) ? x / y : 0; // Второе решение - включает в тернарный оператор интервейс Predicate (Работает)
+    Consumer<Integer> printLn = System.out::println;
 }
